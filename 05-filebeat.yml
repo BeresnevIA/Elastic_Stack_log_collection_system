@@ -1,0 +1,16 @@
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - /var/lib/docker/containers/*/*.log
+
+processors:
+  - add_docker_metadata: ~
+  - add_host_metadata: ~
+
+output.logstash:
+  hosts: ["logstash:5044"]
+  timeout: 60
+  bulk_max_size: 512
+  worker: 1
+  compression_level: 3
